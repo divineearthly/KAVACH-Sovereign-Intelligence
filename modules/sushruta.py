@@ -43,9 +43,15 @@ class SushrutaIncidentResponse:
         }[state]
 
     def respond(self, detection, source):
-        score = float(detection.get("score") or
-                      detection.get("threat_score") or
-                      detection.get("confidence") or 0.0)
+        # Map verdict strings to scores for modules that return verdict not score
+        verdict_map = {"ADHARMIC": 0.90, "SUSPICIOUS": 0.55, "DHARMIC": 0.10,
+                       "PHISHING": 1.00, "LEGITIMATE": 0.10}
+        score = float(
+            detection.get("score") or
+            detection.get("threat_score") or
+            detection.get("confidence") or
+            verdict_map.get(detection.get("verdict",""), 0.0)
+        )
         state   = self._state(score)
         astras  = self._astras(detection, score)
         actions = self._actions(state)
