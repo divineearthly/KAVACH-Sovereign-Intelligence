@@ -12,3 +12,13 @@ kavach_forensic_report.txt
 sample_data/
 recorded_sample.wav
 *.wav
+
+.config/
+sample_data/
+recorded_sample.wav
+*.wav
+
+.config/
+sample_data/
+recorded_sample.wav
+*.wav
