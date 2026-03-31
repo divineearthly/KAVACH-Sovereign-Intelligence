@@ -7,3 +7,8 @@ build/
 .DS_Store
 kavach_evidence.json
 kavach_forensic_report.txt
+
+.config/
+sample_data/
+recorded_sample.wav
+*.wav
