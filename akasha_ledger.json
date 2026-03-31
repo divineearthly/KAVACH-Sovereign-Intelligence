@@ -1,0 +1,369 @@
+[
+    {
+        "block_id": 0,
+        "timestamp": "2026-03-31T04:41:46.458125",
+        "module_name": "Akasha",
+        "event_type": "Genesis",
+        "severity": "INFO",
+        "event_details": {
+            "message": "KAVACH initialized"
+        },
+        "previous_hash": "0",
+        "data_hash": "079a173a2b3220ce7a05e4a07034daed6008717b32a1f49b752c96c4bca61af5",
+        "current_hash": "169dc961b67b76bbde33e80a35eaaed435d7ebf632e5022f7d156b91deb8d28f"
+    },
+    {
+        "block_id": 1,
+        "timestamp": "2026-03-31T04:41:47.047870",
+        "module_name": "Charaka",
+        "event_type": "Behavioral Analysis",
+        "severity": "TURIYA",
+        "event_details": {
+            "user_id": "hacker_99",
+            "score": 0.7051,
+            "guna": "SATTVA",
+            "dosha": "Vata"
+        },
+        "data_hash": "451ca1a3cb4603e6bad56d34465c129d5896c4f3ec083836f76d534f56f12306",
+        "previous_hash": "169dc961b67b76bbde33e80a35eaaed435d7ebf632e5022f7d156b91deb8d28f",
+        "current_hash": "136e29e54943a6cbff0d4a9f4d0e11939de24c5f6c787b39db777a3c9fe71665"
+    },
+    {
+        "block_id": 2,
+        "timestamp": "2026-03-31T04:41:47.048436",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "SUSHUPTI",
+        "event_details": {
+            "incident_id": "557515b2",
+            "timestamp": "2026-03-31T04:41:47.048412",
+            "source": "CHARAKA",
+            "score": 0.7051,
+            "state": "SUSHUPTI",
+            "astras": [
+                "Narayanastra\u2192ISOLATE_SESSION"
+            ],
+            "actions": [
+                "BLOCK_ACTION",
+                "QUARANTINE",
+                "PRESERVE_EVIDENCE"
+            ],
+            "escalate": false
+        },
+        "data_hash": "2e8417edaba7eed4af4533db298782cdbff5ea35fefcaefa575631d59b587212",
+        "previous_hash": "136e29e54943a6cbff0d4a9f4d0e11939de24c5f6c787b39db777a3c9fe71665",
+        "current_hash": "6d02c770a5e85e5abb8393500a787ef49622f35b0e4c639ca12fbe61936f9c61"
+    },
+    {
+        "block_id": 3,
+        "timestamp": "2026-03-31T04:41:47.049120",
+        "module_name": "Nyaya",
+        "event_type": "Phishing Analysis",
+        "severity": "TURIYA",
+        "event_details": {
+            "msg_id": "phish_001",
+            "score": 1.0,
+            "verdict": "PHISHING",
+            "rasa": "Bhayanaka",
+            "authority": "sbi",
+            "sensitive": [
+                "\\botp\\b"
+            ]
+        },
+        "data_hash": "ab08a84dff129e9bfcd379d9abb11fc9f7da4b278a91ce3ba29754d31ec9b826",
+        "previous_hash": "6d02c770a5e85e5abb8393500a787ef49622f35b0e4c639ca12fbe61936f9c61",
+        "current_hash": "bb5f5ba610cf578627604bdafaa412b6af92003793ca82a9f10d5a9a1927ef5e"
+    },
+    {
+        "block_id": 4,
+        "timestamp": "2026-03-31T04:41:47.049524",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "TURIYA",
+        "event_details": {
+            "incident_id": "a5c4f8b4",
+            "timestamp": "2026-03-31T04:41:47.049507",
+            "source": "NYAYA",
+            "score": 1.0,
+            "state": "TURIYA",
+            "astras": [
+                "Brahmastra\u2192FULL_LOCKDOWN",
+                "Agneyastra\u2192BLOCK_URLS"
+            ],
+            "actions": [
+                "FULL_LOCKDOWN",
+                "HUMAN_ESCALATION",
+                "PRESERVE_EVIDENCE",
+                "GENERATE_REPORT"
+            ],
+            "escalate": true
+        },
+        "data_hash": "683d837620c9e88721e5ad365f24736a28ab93f412dac0637575c16ce817169c",
+        "previous_hash": "bb5f5ba610cf578627604bdafaa412b6af92003793ca82a9f10d5a9a1927ef5e",
+        "current_hash": "cf4b52e90b074a3ebd4704ba6ba3181f6c592582604388a684700cc330b43621"
+    },
+    {
+        "block_id": 5,
+        "timestamp": "2026-03-31T04:42:09.570859",
+        "module_name": "Gandharva",
+        "event_type": "Voice Analysis",
+        "severity": "TAMAS",
+        "event_details": {
+            "audio_id": "recorded_sample.wav",
+            "prediction": "REAL",
+            "confidence": 0.77,
+            "severity": "TAMAS"
+        },
+        "data_hash": "a823509f6c543e9f55bdafe169df28e28e120d9c0e7c093d968555f39faa622f",
+        "previous_hash": "cf4b52e90b074a3ebd4704ba6ba3181f6c592582604388a684700cc330b43621",
+        "current_hash": "9edba0caf65d9a2cf4275800e1fc9e139c96c57aad314c5745a1f194181c1453"
+    },
+    {
+        "block_id": 6,
+        "timestamp": "2026-03-31T04:42:09.571790",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "SUSHUPTI",
+        "event_details": {
+            "incident_id": "fe774813",
+            "timestamp": "2026-03-31T04:42:09.571764",
+            "source": "GANDHARVA",
+            "score": 0.77,
+            "state": "SUSHUPTI",
+            "astras": [
+                "Narayanastra\u2192ISOLATE_SESSION"
+            ],
+            "actions": [
+                "BLOCK_ACTION",
+                "QUARANTINE",
+                "PRESERVE_EVIDENCE"
+            ],
+            "escalate": false
+        },
+        "data_hash": "9a5e7cfd4317ad68ec08ee44882bf3861139a466f286c3192c7155ae6fc48c7a",
+        "previous_hash": "9edba0caf65d9a2cf4275800e1fc9e139c96c57aad314c5745a1f194181c1453",
+        "current_hash": "218fec9462d3476db026fb71bdd3b6c61f2a3a43a979eebea6ea807ca7246022"
+    },
+    {
+        "block_id": 7,
+        "timestamp": "2026-03-31T04:42:09.572993",
+        "module_name": "Dharma",
+        "event_type": "Request Analysis",
+        "severity": "TURIYA",
+        "event_details": {
+            "url": "https://freegpt.xyz/api/chat",
+            "verdict": "ADHARMIC",
+            "domain_status": "ADHARMIC",
+            "header_flags": [
+                "no_auth"
+            ],
+            "pii_found": [
+                "otp"
+            ],
+            "classification": "HIGH",
+            "entropy": 4.274
+        },
+        "data_hash": "17c5699741b2f07eeaf382afb3db3eebd31a4df00999e5392d9bd61df87e6229",
+        "previous_hash": "218fec9462d3476db026fb71bdd3b6c61f2a3a43a979eebea6ea807ca7246022",
+        "current_hash": "2d87a4bf94b310bc4b4925bce518b904717c8d3b2172218e4144492e8e51dd05"
+    },
+    {
+        "block_id": 8,
+        "timestamp": "2026-03-31T04:42:09.573742",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "JAGRAT",
+        "event_details": {
+            "incident_id": "44e7cff5",
+            "timestamp": "2026-03-31T04:42:09.573723",
+            "source": "DHARMA",
+            "score": 0.0,
+            "state": "JAGRAT",
+            "astras": [],
+            "actions": [
+                "LOG_ONLY"
+            ],
+            "escalate": false
+        },
+        "data_hash": "7242c757c81380b2c27ac0e4c674114741070c3abf682d2e081975cb617d6170",
+        "previous_hash": "2d87a4bf94b310bc4b4925bce518b904717c8d3b2172218e4144492e8e51dd05",
+        "current_hash": "5c3cb7788866d566c5767f01e2144057af8b9f59edf97d52355b4d13c52fb268"
+    },
+    {
+        "block_id": 9,
+        "timestamp": "2026-03-31T04:42:10.514940",
+        "module_name": "Charaka",
+        "event_type": "Behavioral Analysis",
+        "severity": "TURIYA",
+        "event_details": {
+            "user_id": "hacker_99",
+            "score": 0.7051,
+            "guna": "SATTVA",
+            "dosha": "Vata"
+        },
+        "data_hash": "451ca1a3cb4603e6bad56d34465c129d5896c4f3ec083836f76d534f56f12306",
+        "previous_hash": "5c3cb7788866d566c5767f01e2144057af8b9f59edf97d52355b4d13c52fb268",
+        "current_hash": "e04ecd15ac8ea4f249e849050ea9e1bc21b240df9ac8f7905b0f02ec2b337988"
+    },
+    {
+        "block_id": 10,
+        "timestamp": "2026-03-31T04:42:10.516027",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "SUSHUPTI",
+        "event_details": {
+            "incident_id": "4194c26b",
+            "timestamp": "2026-03-31T04:42:10.516002",
+            "source": "CHARAKA",
+            "score": 0.7051,
+            "state": "SUSHUPTI",
+            "astras": [
+                "Narayanastra\u2192ISOLATE_SESSION"
+            ],
+            "actions": [
+                "BLOCK_ACTION",
+                "QUARANTINE",
+                "PRESERVE_EVIDENCE"
+            ],
+            "escalate": false
+        },
+        "data_hash": "5fdeecbca52d9d9bb1bd991409ac644c657dd0e40d3983901aeb4dbfab004ac0",
+        "previous_hash": "e04ecd15ac8ea4f249e849050ea9e1bc21b240df9ac8f7905b0f02ec2b337988",
+        "current_hash": "6fcfd0c2ee0d5466e55d1b8ba9284e7ae7411a5a1f3da43c14e5de7c3e470897"
+    },
+    {
+        "block_id": 11,
+        "timestamp": "2026-03-31T04:42:10.517341",
+        "module_name": "Nyaya",
+        "event_type": "Phishing Analysis",
+        "severity": "TURIYA",
+        "event_details": {
+            "msg_id": "phish_001",
+            "score": 1.0,
+            "verdict": "PHISHING",
+            "rasa": "Bhayanaka",
+            "authority": "sbi",
+            "sensitive": [
+                "\\botp\\b"
+            ]
+        },
+        "data_hash": "ab08a84dff129e9bfcd379d9abb11fc9f7da4b278a91ce3ba29754d31ec9b826",
+        "previous_hash": "6fcfd0c2ee0d5466e55d1b8ba9284e7ae7411a5a1f3da43c14e5de7c3e470897",
+        "current_hash": "7033fa6dec0cbdc1d5b4867380407e29d38c3eeb0c1d4b6aa80455d0beb72068"
+    },
+    {
+        "block_id": 12,
+        "timestamp": "2026-03-31T04:42:10.518367",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "TURIYA",
+        "event_details": {
+            "incident_id": "65cdc76e",
+            "timestamp": "2026-03-31T04:42:10.518344",
+            "source": "NYAYA",
+            "score": 1.0,
+            "state": "TURIYA",
+            "astras": [
+                "Brahmastra\u2192FULL_LOCKDOWN",
+                "Agneyastra\u2192BLOCK_URLS"
+            ],
+            "actions": [
+                "FULL_LOCKDOWN",
+                "HUMAN_ESCALATION",
+                "PRESERVE_EVIDENCE",
+                "GENERATE_REPORT"
+            ],
+            "escalate": true
+        },
+        "data_hash": "ee89de565e2c5819a09ae0ce879cb2a0718df64a568a20348c72c2fd996f6d1d",
+        "previous_hash": "7033fa6dec0cbdc1d5b4867380407e29d38c3eeb0c1d4b6aa80455d0beb72068",
+        "current_hash": "16ad7ba6d3d8260e24ea5bf194e087d9ec6d409f76797da59ae0d1588d398dc3"
+    },
+    {
+        "block_id": 13,
+        "timestamp": "2026-03-31T04:42:10.918234",
+        "module_name": "Gandharva",
+        "event_type": "Voice Analysis",
+        "severity": "TAMAS",
+        "event_details": {
+            "audio_id": "recorded_sample.wav",
+            "prediction": "REAL",
+            "confidence": 0.77,
+            "severity": "TAMAS"
+        },
+        "data_hash": "a823509f6c543e9f55bdafe169df28e28e120d9c0e7c093d968555f39faa622f",
+        "previous_hash": "16ad7ba6d3d8260e24ea5bf194e087d9ec6d409f76797da59ae0d1588d398dc3",
+        "current_hash": "8392fa23481c3eadeedcde823b881ec904d143bcfda7cc99d020b4b0626fd5fb"
+    },
+    {
+        "block_id": 14,
+        "timestamp": "2026-03-31T04:42:10.919531",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "SUSHUPTI",
+        "event_details": {
+            "incident_id": "92fbab63",
+            "timestamp": "2026-03-31T04:42:10.919505",
+            "source": "GANDHARVA",
+            "score": 0.77,
+            "state": "SUSHUPTI",
+            "astras": [
+                "Narayanastra\u2192ISOLATE_SESSION"
+            ],
+            "actions": [
+                "BLOCK_ACTION",
+                "QUARANTINE",
+                "PRESERVE_EVIDENCE"
+            ],
+            "escalate": false
+        },
+        "data_hash": "f9b49aaf25328579352d583fb9d39f45ac168b44087a39ee1ea000b4eeab76e3",
+        "previous_hash": "8392fa23481c3eadeedcde823b881ec904d143bcfda7cc99d020b4b0626fd5fb",
+        "current_hash": "b0100789e12e97220ebb5b1c839e2efd74bda009c1b99c66a740ee491d272567"
+    },
+    {
+        "block_id": 15,
+        "timestamp": "2026-03-31T04:42:10.920916",
+        "module_name": "Dharma",
+        "event_type": "Request Analysis",
+        "severity": "TURIYA",
+        "event_details": {
+            "url": "https://freegpt.xyz/api/chat",
+            "verdict": "ADHARMIC",
+            "domain_status": "ADHARMIC",
+            "header_flags": [
+                "no_auth"
+            ],
+            "pii_found": [
+                "otp"
+            ],
+            "classification": "HIGH",
+            "entropy": 4.274
+        },
+        "data_hash": "17c5699741b2f07eeaf382afb3db3eebd31a4df00999e5392d9bd61df87e6229",
+        "previous_hash": "b0100789e12e97220ebb5b1c839e2efd74bda009c1b99c66a740ee491d272567",
+        "current_hash": "52ed57cae77c9dcdc136f098d8bb00f3194c030a13b6d16a95a151c7d0e4036a"
+    },
+    {
+        "block_id": 16,
+        "timestamp": "2026-03-31T04:42:10.922022",
+        "module_name": "Sushruta",
+        "event_type": "Incident Response",
+        "severity": "JAGRAT",
+        "event_details": {
+            "incident_id": "7cc55818",
+            "timestamp": "2026-03-31T04:42:10.922004",
+            "source": "DHARMA",
+            "score": 0.0,
+            "state": "JAGRAT",
+            "astras": [],
+            "actions": [
+                "LOG_ONLY"
+            ],
+            "escalate": false
+        },
+        "data_hash": "a1af8f857867a37639b1de44738842fa67d3d4c430947b5f5b05174b4397a245",
+        "previous_hash": "52ed57cae77c9dcdc136f098d8bb00f3194c030a13b6d16a95a151c7d0e4036a",
+        "current_hash": "b54274eb2803cecb3f310c6f0426af84deec7dfd6444e9e79f3f08e7fd62c774"
+    }
+]
