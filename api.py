@@ -5,104 +5,85 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 import time
 
-from modules.charaka import CharakaDiagnosticEngine
-from modules.nyaya_engine import NyayaRuleEngine
-from modules.gandharva import GandharvaSonarDefense
+from modules.charaka import CharakaAnomalyEngine
+from modules.nyaya import NyayaPhishingInterceptor
+from modules.gandharva import GandharvaVoiceDetector
 from modules.akasha import AkashaLedger
 
 app = FastAPI(
     title="🔱 KAVACH API",
     description="Sovereign Vedic Cyber Defense Intelligence",
-    version="2.0.0"
+    version="3.2.0"
 )
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-# Initialize engines
-charaka = CharakaDiagnosticEngine()
-nyaya = NyayaRuleEngine()
-gandharva = GandharvaSonarDefense()
+charaka = CharakaAnomalyEngine()
+nyaya = NyayaPhishingInterceptor()
+gandharva = GandharvaVoiceDetector()
 akasha = AkashaLedger()
 
-# Models
 class NetworkEvent(BaseModel):
-    source_ip: str = Field(..., description="Source IP address")
+    source_ip: str = Field("0.0.0.0", description="Source IP address")
     dest_ip: Optional[str] = Field(None, description="Destination IP")
     port: Optional[int] = Field(None, description="Port number")
     payload: Optional[str] = Field(None, description="Request payload")
     event_type: Optional[str] = Field("unknown", description="Event type")
-    bytes_sent: Optional[int] = Field(0, description="Bytes transmitted")
 
 class ScanRequest(BaseModel):
     events: List[NetworkEvent]
-    context: Optional[dict] = Field({}, description="Additional context")
 
-class ThreatResponse(BaseModel):
-    verdict: str
-    diagnosis: dict
-    rule_matched: Optional[str]
-    severity: int
-    action: str
-    timestamp: float
-
-# Routes
 @app.get("/")
 def root():
     return {
         "name": "KAVACH API",
-        "version": "2.0.0",
+        "version": "3.2.0",
         "status": "ACTIVE",
-        "modules": ["charaka", "nyaya", "gandharva", "akasha"],
+        "modules": ["charaka", "nyaya", "gandharva", "akasha", "sushruta", "dharma"],
         "sutra": "सत्यमेव जयते"
     }
 
-@app.post("/scan/network", response_model=ThreatResponse)
+@app.post("/scan/network")
 def scan_network(request: ScanRequest):
     """Scan network events for threats."""
     results = []
-    
     for event in request.events:
         event_dict = event.model_dump()
         
-        # Charaka diagnosis
-        diagnosis = charaka.diagnose([event_dict])
+        # Charaka anomaly analysis
+        charaka_result = charaka.analyze(event_dict)
         
-        # Nyaya firewall
-        payload = event_dict.get("payload", "")
-        rule_match = nyaya.evaluate(payload, request.context)
+        # Nyaya phishing analysis
+        nyaya_result = nyaya.analyze(str(event_dict))
         
-        verdict = "BLOCK" if (rule_match and rule_match["verdict"] in ("BLOCK", "RATE_LIMIT")) else "ALLOW"
+        # Record in Akasha
+        akasha.add_entry("api", "network_scan", 
+                        charaka_result.get("severity", 5),
+                        str(event_dict))
         
         results.append({
-            "verdict": verdict,
-            "diagnosis": diagnosis,
-            "rule_matched": rule_match["rule_id"] if rule_match else None,
-            "severity": diagnosis.get("severity", 0),
-            "action": "BLOCKED" if verdict == "BLOCK" else "ALLOWED",
-            "timestamp": time.time()
+            "charaka": charaka_result,
+            "nyaya": nyaya_result,
+            "severity": charaka_result.get("severity", 0)
         })
     
-    # Record in Akasha
-    akasha.record("api_scan", {"events_count": len(request.events), "results": len(results)}, "api")
-    
-    return results[0] if results else {"verdict": "ALLOW", "severity": 0}
+    return {"results": results, "count": len(results)}
 
 @app.post("/scan/audio")
 async def scan_audio(file: UploadFile = File(...)):
-    """Analyze audio file for sonic threats."""
+    """Analyze audio file for voice deepfakes."""
     audio_data = await file.read()
-    result = gandharva.analyze(audio_data, file.filename)
-    akasha.record("audio_scan", result, "api")
+    result = gandharva.analyze(audio_data)
+    akasha.add_entry("api", "audio_scan", result.get("severity", 5), file.filename)
     return result
 
 @app.get("/status")
 def system_status():
     """Get complete KAVACH system status."""
     return {
-        "nyaya": nyaya.stats(),
-        "akasha": akasha.get_stats(),
-        "charaka_diagnoses": len(charaka.diagnosis_history),
-        "gandharva_signatures": len(gandharva.sonic_threat_db)
+        "charaka_samples": charaka.n_samples if hasattr(charaka, 'n_samples') else "trained",
+        "nyaya_patterns": len(nyaya.rasa_patterns) if hasattr(nyaya, 'rasa_patterns') else "loaded",
+        "akasha_chain_height": len(akasha.chain)
     }
 
 @app.get("/health")

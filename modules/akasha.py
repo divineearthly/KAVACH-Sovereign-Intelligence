@@ -42,6 +42,10 @@ class AkashaLedger:
             json.dump(self.chain, f, indent=4, default=str)
 
     def add_entry(self, module, event_type, severity, details):
+    
+    def record(self, event_type: str, data: dict, module: str) -> str:
+        """Alias for add_entry — for API compatibility."""
+        return self.add_entry(module, event_type, data.get("severity", 5), str(data))
         prev = self.chain[-1]
         b = {"block_id": len(self.chain),
              "timestamp": datetime.utcnow().isoformat(),
