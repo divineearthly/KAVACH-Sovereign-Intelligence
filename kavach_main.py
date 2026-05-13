@@ -9,6 +9,7 @@ from modules.nyaya     import NyayaPhishingInterceptor
 from modules.gandharva import GandharvaVoiceDetector, GandharvaVishingDetector
 from modules.sushruta  import SushrutaIncidentResponse
 from modules.dharma    import DharmaMonitor, DharmaSutraParser
+from modules.dharma_watchdog import DharmaWatchdog
 
 BANNER = """
 ╔══════════════════════════════════════════════════╗
@@ -37,6 +38,8 @@ class KAVACH:
         self.sushruta  = SushrutaIncidentResponse(self.ledger)
         self.dharma    = DharmaMonitor(self.ledger)
         self.dharma_parser = DharmaSutraParser()
+        self.dharma_watchdog = DharmaWatchdog(self.dharma_parser)
+        self.dharma_watchdog.start()
         print(BANNER)
 
     def scan_behavior(self, behavior, user_id="anon"):
