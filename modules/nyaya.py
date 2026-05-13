@@ -47,12 +47,16 @@ class NyayaPhishingInterceptor:
         p2 = rasa != "None"
         p3 = bool(auth)
         p5 = bool(re.search(r"http[s]?://\S+\.(tk|ml|xyz|cc|info|top|click|live)", t))
+        # v1.3: P6 Kala (Temporal Urgency) + P7 Vach (Phone Call) per HN review
+        p6 = bool(re.search(r"tonight|today|urgent|now|expire|hours|immediately|within\s+\d+\s+hour|deadline", t, re.I))
+        p7 = bool(re.search(r"\d{10}|call\s+\d|dispute.*\d|customer.*care.*\d", t))
+        urgency_boost = 0.15 if (p6 and (p1 or p3)) else 0.0
         p4 = bool(sens)
         # v1.2: P4+P3 interaction boost per HN review
         aadhaar_hit = bool(re.search(r"aadhaar|pan.card|kyc", t, re.I))
         url_suspicious = bool(re.search(r"http[s]?://\S+\.(tk|ml|xyz|cc|info|top|click|live)", t))
         p4p3_boost = 0.25 if (aadhaar_hit and url_suspicious) else 0.0
-        score = round(min(0.10*p1+0.25*p2+0.20*p3+0.30*p4+0.15*p5+p4p3_boost+0.15*(p1&p2&p3&p4),1.0),4)
+        score = round(min(0.10*p1+0.25*p2+0.20*p3+0.30*p4+0.15*p5+0.05*p6+0.10*p7+p4p3_boost+urgency_boost+0.15*(p1&p2&p3&p4),1.0),4)
 
         verdict = "PHISHING" if score>0.35 else "SUSPICIOUS" if score>0.2 else "LEGITIMATE"
         sev     = {"PHISHING":"TURIYA","SUSPICIOUS":"RAJAS","LEGITIMATE":"TAMAS"}[verdict]
