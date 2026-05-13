@@ -125,7 +125,7 @@ class DharmaSutraParser:
             # Aadhaar: 12 digits with optional spaces/dashes
             "aadhaar": r"\b[2-9]\d{3}[\s-]?\d{4}[\s-]?\d{4}\b",
             # Mobile: +91, 10-digit, or 5-5 spaced (98765 43210)
-            "mobile": r"(?:\+91[\s-]?)?\b[6-9](?:\d{2}[\s-]?\d{3}[\s-]?\d{4}|\d{9})\b",
+            "mobile": r"(?:\+91[\s-]?)?\b[6-9](?:\d{9}|\d{2}[\s-]?\d{3}[\s-]?\d{4}|\d{4}[\s-]?\d{6})\b",
             # PAN: ABCDE1234F
             "pan": r"\b[A-Z]{5}[0-9]{4}[A-Z]\b",
             # UPI ID: name@bank
