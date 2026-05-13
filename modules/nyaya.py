@@ -46,7 +46,7 @@ class NyayaPhishingInterceptor:
         p1 = bool(re.search(r"verify|update|confirm|click|call|pay|send",t,re.I))
         p2 = rasa != "None"
         p3 = bool(auth)
-        p5 = bool(re.search(r"http[s]?://S+.(tk|ml|xyz|cc|info|top|click|live)", t))
+        p5 = bool(re.search(r"http[s]?://\S+\.(tk|ml|xyz|cc|info|top|click|live)", t))
         p4 = bool(sens)
         # v1.2: P4+P3 interaction boost per HN review
         aadhaar_hit = bool(re.search(r"aadhaar|pan.card|kyc", t, re.I))
