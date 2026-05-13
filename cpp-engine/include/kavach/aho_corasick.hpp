@@ -66,7 +66,7 @@ public:
     }
     
     // Scan text and return all matched pattern IDs
-    std::vector<int> scan(const std::string& text) {
+    std::vector<int> scan(const std::string& text) const {
         std::vector<int> matches;
         Node* node = root.get();
         
