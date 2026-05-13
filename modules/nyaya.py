@@ -49,7 +49,7 @@ class NyayaPhishingInterceptor:
         p4 = bool(sens)
         score = round(min(0.10*p1+0.25*p2+0.20*p3+0.30*p4+0.15*(p1&p2&p3&p4),1.0),4)
 
-        verdict = "PHISHING" if score>0.5 else "SUSPICIOUS" if score>0.3 else "LEGITIMATE"
+        verdict = "PHISHING" if score>0.35 else "SUSPICIOUS" if score>0.2 else "LEGITIMATE"
         sev     = {"PHISHING":"TURIYA","SUSPICIOUS":"RAJAS","LEGITIMATE":"TAMAS"}[verdict]
         result  = {"msg_id":msg_id,"score":score,"verdict":verdict,
                    "rasa":rasa,"authority":auth,"sensitive":sens}
