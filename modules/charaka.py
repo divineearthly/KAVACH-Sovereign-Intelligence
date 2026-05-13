@@ -3,9 +3,18 @@ Vedic Sutra 14: Charaka Samhita — Anomaly Detection.
 Three Doshas = three anomaly classes.
 Three Gunas  = three threat states (Sutra 51).
 """
-import numpy as np
-from sklearn.ensemble import IsolationForest
-from sklearn.preprocessing import StandardScaler
+try:
+    import numpy as np
+except ImportError:
+    np = None
+try:
+    from sklearn.ensemble import IsolationForest
+except ImportError:
+    IsolationForest = None
+try:
+    from sklearn.preprocessing import StandardScaler
+except ImportError:
+    StandardScaler = None
 
 
 class CharakaAnomalyEngine:
