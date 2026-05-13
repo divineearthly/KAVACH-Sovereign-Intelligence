@@ -80,3 +80,56 @@ L4 Class : {l4}
 L5 Entropy:{round(ent,4)} {l5}
 ════════════════════════════════════""")
         return result
+
+import yaml
+import datetime
+import re
+
+class DharmaSutraParser:
+    """Evaluates YAML-based security policies (Yamas and Niyamas)."""
+    
+    def __init__(self, policy_path='modules/dharma_policies.yaml'):
+        with open(policy_path, 'r') as f:
+            self.policies = yaml.safe_load(f)
+    
+    def evaluate_yamas(self, event_context):
+        """Checks for hard violations (Restraints). Returns list of violated yamas."""
+        violations = []
+        now = datetime.datetime.now().time()
+        
+        for yama in self.policies.get('yamas', []):
+            if 'timeframe' in yama:
+                start_str, end_str = yama['timeframe'].split('-')
+                start_h, start_m = map(int, start_str.split(':'))
+                end_h, end_m = map(int, end_str.split(':'))
+                start = datetime.time(start_h, start_m)
+                end = datetime.time(end_h, end_m)
+                
+                # Overnight window check (e.g., 22:00-06:00)
+                in_window = (start <= now or now <= end) if start > end else (start <= now <= end)
+                
+                if in_window and event_context.get('has_pii'):
+                    violations.append(yama)
+            
+            elif yama.get('rule') == 'redact_sensitive_logs':
+                # Always active — non-negotiable
+                pass  # Applied via apply_niyamas()
+        
+        return violations
+    
+    def apply_niyamas(self, data):
+        """Apply mandatory observances. Returns redacted data."""
+        patterns = {
+            "aadhaar": r"\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b",
+            "pan": r"\b[A-Z]{5}[0-9]{4}[A-Z]\b",
+            "mobile": r"\b[6-9]\d{9}\b",
+            "otp": r"\b\d{6}\b",
+            "cvv": r"\b\d{3,4}\b",
+            "password": r"password[=:]\s*\S+",
+        }
+        
+        redacted = str(data)
+        for label, pattern in patterns.items():
+            redacted = re.sub(pattern, f"[{label.upper()} REDACTED]", redacted, flags=re.I)
+        
+        return redacted

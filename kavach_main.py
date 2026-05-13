@@ -8,7 +8,7 @@ from modules.charaka   import CharakaAnomalyEngine
 from modules.nyaya     import NyayaPhishingInterceptor
 from modules.gandharva import GandharvaVoiceDetector, GandharvaVishingDetector
 from modules.sushruta  import SushrutaIncidentResponse
-from modules.dharma    import DharmaMonitor
+from modules.dharma    import DharmaMonitor, DharmaSutraParser
 
 BANNER = """
 ╔══════════════════════════════════════════════════╗
@@ -36,6 +36,7 @@ class KAVACH:
         self.vishing   = GandharvaVishingDetector()
         self.sushruta  = SushrutaIncidentResponse(self.ledger)
         self.dharma    = DharmaMonitor(self.ledger)
+        self.dharma_parser = DharmaSutraParser()
         print(BANNER)
 
     def scan_behavior(self, behavior, user_id="anon"):
@@ -104,6 +105,31 @@ class KAVACH:
         self.ledger.export_evidence()
         print("\n✅ KAVACH DEMO COMPLETE — System is SOVEREIGN")
 
+
+    def scan_policy(self, event_context, raw_data=None):
+        """Evaluate Dharma Yama/Niyama policies against an event."""
+        violations = self.dharma_parser.evaluate_yamas(event_context)
+        
+        if violations:
+            # Yama violation = immediate TURIYA
+            for v in violations:
+                self.sushruta.respond({
+                    "score": 1.0,
+                    "verdict": "DHARMA-YAMA-VIOLATION",
+                    "sutra": v.get("sutra", "Unknown"),
+                    "details": v.get("description", "")
+                }, "DHARMA-YAMA")
+        
+        # Apply Niyamas (redaction)
+        redacted = None
+        if raw_data:
+            redacted = self.dharma_parser.apply_niyamas(raw_data)
+        
+        return {
+            "violations": len(violations),
+            "yamas_broken": [v["sutra"] for v in violations],
+            "redacted_data": redacted
+        }
 
 if __name__ == "__main__":
     kavach = KAVACH()
