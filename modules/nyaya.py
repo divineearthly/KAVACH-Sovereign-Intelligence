@@ -28,10 +28,41 @@ class NyayaPhishingInterceptor:
         self.ledger   = ledger
         self._rr = {r:[re.compile(p,re.I) for p in ps]
                     for r,ps in self.RASAS.items()}
-        self._ar = [re.compile(a,re.I) for a in self.AUTHORITIES]
+        self._ar = [re.compile(r"\b" + a + r"\b", re.I) for a in [
+        # National banks
+        "sbi", "hdfc", "icici", "axis", "pnb", "bob", "canara", "union bank",
+        "kotak", "idbi", "indian bank", "bank of india", "central bank",
+        # Payment apps
+        "phonepe", "gpay", "google pay", "paytm", "amazon pay", "mobikwik",
+        # Government
+        "pm kisan", "ayushman", "epfo", "income tax", "gst", "aadhaar", "uidai",
+        "pan card", "passport", "digilocker", "umang", "mygov",
+        # State electricity boards (India)
+        "apdcl", "cesc", "bescom", "tangedco", "msedcl", "tneb", "uppcl",
+        "bvvs", "dhbvn", "uhbvn", "mvvm", "paschim gujarat vij",
+        # Telecom
+        "jio", "airtel", "vi", "bsnl", "mtnl",
+        # Delivery
+        "india post", "fedex", "dhl", "blue dart", "delhivery", "dt dc",
+        # Regional banks (Assam/Northeast)
+        "agvb", "asrb", "nefdi", "nagaland rural bank",
+        # Generic authority triggers
+        "rbi", "sebi", "irda", "trai", "nps", "ppf", "nsdl", "cdsl",
+        "cibil", "crpf", "income tax department", "customs"
+    ]]
         self._sr = [re.compile(p,re.I) for p in self.SENSITIVE]
         print("🔱 NYAYA ONLINE — 5-Step Pramana Ready")
 
+    # v1.4: Hinglish transliteration urgency patterns
+    _hinglish_urgency = [
+        r"band ho jayega", r"band ho jaayega", r"block kar diya",
+        r"kijiye", r"kripa karke", r"turant", r"foran", r"jaldi",
+        r"aapka account", r"apka number", r"verify karein",
+        r"update karein", r"bhejein", r"call karein", r"sampark karein",
+        r"daba kar", r"click karein", r"abhi", r"rat 12 baje",
+        r"24 ghante", r"aaj hi", r"kal subah", r"chalu", r"band",
+    ]
+    
     def analyze(self, text, msg_id="unknown"):
         t = text.lower()
         rasa,hits = "None",[]
@@ -45,6 +76,12 @@ class NyayaPhishingInterceptor:
 
         p1 = bool(re.search(r"verify|update|confirm|click|call|pay|send",t,re.I))
         p2 = rasa != "None"
+        # v1.4: Hinglish urgency check
+        hinglish_hit = any(re.search(p, t, re.I) for p in self._hinglish_urgency)
+        if hinglish_hit:
+            p6 = True  # Override P6 if Hinglish urgency detected
+            if not p2:
+                p2 = True  # Treat as Rasa hit
         p3 = bool(auth)
         p5 = bool(re.search(r"http[s]?://\S+\.(tk|ml|xyz|cc|info|top|click|live)", t))
         # v1.3: P6 Kala (Temporal Urgency) + P7 Vach (Phone Call) per HN review
