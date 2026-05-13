@@ -34,3 +34,23 @@ The benchmark measures **in-memory keyword lookup throughput** — how fast KAVA
 
 ## What Matters
 The key finding: KAVACH's hash-indexed architecture shows **no performance degradation** when scaling from 10 to 50,000 rules. This proves the O(1) lookup design works for production-scale rule sets.
+
+## Nyaya Phishing Detection — Real-World Test
+
+**Test Date:** May 2026  
+**Samples:** 6 real Indian phishing SMS + 6 benign messages  
+**Methodology:** NyayaPhishingInterceptor.analyze() on raw text
+
+| Metric | Score |
+|--------|:-----:|
+| Detection Rate | 3/6 (50%) |
+| False Positives | 0/6 (0%) |
+| Precision | 100% |
+| Recall | 50% |
+
+### Known Gaps (Documented)
+- P4 (sensitive data) fires alone on Aadhaar/PAN without enough weight to reach PHISHING threshold (>0.5)
+- Suspicious TLDs (.tk, .ml, .xyz) not detected
+- Urgency patterns without authority match score too low
+
+### Next: Nyaya v1.1 with P5 (URL reputation) and adjusted scoring weights
