@@ -46,8 +46,13 @@ class NyayaPhishingInterceptor:
         p1 = bool(re.search(r"verify|update|confirm|click|call|pay|send",t,re.I))
         p2 = rasa != "None"
         p3 = bool(auth)
+        p5 = bool(re.search(r"http[s]?://S+.(tk|ml|xyz|cc|info|top|click|live)", t))
         p4 = bool(sens)
-        score = round(min(0.10*p1+0.25*p2+0.20*p3+0.30*p4+0.15*(p1&p2&p3&p4),1.0),4)
+        # v1.2: P4+P3 interaction boost per HN review
+        aadhaar_hit = bool(re.search(r"aadhaar|pan.card|kyc", t, re.I))
+        url_suspicious = bool(re.search(r"http[s]?://\S+\.(tk|ml|xyz|cc|info|top|click|live)", t))
+        p4p3_boost = 0.25 if (aadhaar_hit and url_suspicious) else 0.0
+        score = round(min(0.10*p1+0.25*p2+0.20*p3+0.30*p4+0.15*p5+p4p3_boost+0.15*(p1&p2&p3&p4),1.0),4)
 
         verdict = "PHISHING" if score>0.35 else "SUSPICIOUS" if score>0.2 else "LEGITIMATE"
         sev     = {"PHISHING":"TURIYA","SUSPICIOUS":"RAJAS","LEGITIMATE":"TAMAS"}[verdict]
