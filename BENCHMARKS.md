@@ -54,3 +54,18 @@ The key finding: KAVACH's hash-indexed architecture shows **no performance degra
 - Urgency patterns without authority match score too low
 
 ### Next: Nyaya v1.1 with P5 (URL reputation) and adjusted scoring weights
+
+## Updated: 29-Sample Test (May 2026)
+
+| Metric | Score |
+|--------|:-----:|
+| Samples | 19 scam + 10 benign |
+| Detection Rate | 3/19 (15.8%) |
+| False Positives | 0/10 (0%) |
+| Precision | 100% |
+
+### Root Cause
+The 4 Rasa patterns (Bhayanaka, Shringara, Vira, Adbhuta) cover only ~20 emotional keywords. Most Indian scam SMS use urgency without fear, reward without romance — patterns that don't match the current Rasa dictionary.
+
+### Next Step
+Expand Rasa patterns with India-specific scam language collected from public sources.
