@@ -1,0 +1,49 @@
+# Dharma v2.1 — Policy-as-Sutra
+# Yamas = Hard Restraints (violation → TURIYA)
+# Niyamas = Mandatory Observances (violation → SUSHUPTI)
+
+yamas:
+  - id: YAMA-001
+    sutra: "No_Outbound_PII_After_Sandhya"
+    description: "Block any outbound PII between 10 PM and 6 AM"
+    rule: block_outbound_pii
+    timeframe: "22:00-06:00"
+    action: FULL_LOCKDOWN
+    severity: 1.0
+
+  - id: YAMA-002
+    sutra: "Tattva-Gopana"
+    description: "Redact all sensitive identifiers before logging"
+    rule: redact_sensitive_logs
+    patterns: ["aadhaar", "pan", "mobile", "otp", "password", "cvv"]
+    action: PRE_PROCESS
+
+  - id: YAMA-003
+    sutra: "Simant-Suraksha"
+    description: "Block all communication with known malicious IPs"
+    rule: block_malicious_ips
+    action: FULL_LOCKDOWN
+    severity: 1.0
+
+niyamas:
+  - id: NIYAMA-001
+    sutra: "Aadhaar-Pratyaksha"
+    description: "Verify identity before any credential access"
+    rule: verify_identity
+    trigger: "credential_access"
+    action: CHARAKA_BEHAVIORAL_AUDIT
+
+  - id: NIYAMA-002
+    sutra: "Akasha-Pramanikaran"
+    description: "Log every detection decision to immutable ledger"
+    rule: log_to_akasha
+    trigger: "any_detection"
+    action: AKASHA_RECORD
+
+  - id: NIYAMA-003
+    sutra: "Sushruta-Anumodan"
+    description: "Require human approval for TURIYA in non-critical systems"
+    rule: human_approval_turiya
+    trigger: "TURIYA_state"
+    condition: "non_critical_system"
+    action: HUMAN_ESCALATION
