@@ -1,0 +1,20 @@
+🔱 KAVACH v3.3 — Aho-Corasick Pipeline
+   सत्यमेव जयते
+
+📥 Building Aho-Corasick automaton...
+   Patterns: 124 loaded
+📥 Building rule index...
+   Index: 0 keywords
+
+📊 Pipeline Benchmark (8 threads, 10 sec)...
+   Total:  23.631M evaluations
+   Rate:   2.4M events/sec
+   Alerts: 0
+
+📊 Detail Scan:
+   [🟡] matches=7 sev=3 | Your SBI account will be blocked. Update KYC immediately
+   [🟡] matches=3 sev=3 | Congratulations you won 50000 rupees click here
+   [🟡] matches=1 sev=3 | Meeting at 3pm tomorrow please confirm
+   [🟡] matches=2 sev=3 | Your HDFC card charged 45000 dispute call 9876543210
+   [🟢] matches=0 sev=-1 | Normal traffic data packet routing information
+   [🟡] matches=5 sev=3 | PM Kisan Yojana: Submit Aadhaar at http://pmkisan.tk
