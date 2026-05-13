@@ -120,28 +120,24 @@ class DharmaSutraParser:
     def apply_niyamas(self, data):
         """Apply mandatory observances. Returns redacted data."""
         patterns = {
-            # Aadhaar: 1234 5678 9012 or 1234-5678-9012 or 123456789012
+            # Credit card FIRST — 16 digits. Check before Aadhaar (12 digits)
+            "credit_card": r"\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b",
+            # Aadhaar: 12 digits with optional spaces/dashes
             "aadhaar": r"\b[2-9]\d{3}[\s-]?\d{4}[\s-]?\d{4}\b",
+            # Mobile: +91, 10-digit, or 5-5 spaced (98765 43210)
+            "mobile": r"(?:\+91[\s-]?)?\b[6-9](?:\d{2}[\s-]?\d{3}[\s-]?\d{4}|\d{9})\b",
             # PAN: ABCDE1234F
             "pan": r"\b[A-Z]{5}[0-9]{4}[A-Z]\b",
-            # Mobile: +91-9876543210, 09876543210, 9876543210, 98765 43210
-            "mobile": r"(?:\+91[\s-]?)?\b[6-9]\d{2}[\s-]?\d{3}[\s-]?\d{4}\b",
-            # OTP: 6-digit codes
-            "otp": r"\b\d{6}\b",
-            # CVV: 3-4 digit security codes
-            "cvv": r"\b\d{3,4}\b",
-            # Password in logs: password=xxx or password:xxx
-            "password": r"password[=:]\s*\S+",
-            # Bank account: 12-18 digits with possible spaces
-            "bank_account": r"\b\d{9,18}\b",
             # UPI ID: name@bank
             "upi": r"\b[\w.-]+@[\w]+\b",
-            # Credit card: 16 digits with spaces/dashes
-            "credit_card": r"\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b",
+            # Password in logs
+            "password": r"password[=:]\s*\S+",
+            # OTP: 6-digit codes
+            "otp": r"\b\d{6}\b",
+            # CVV: 3-4 digit codes
+            "cvv": r"\b\d{3,4}\b",
         }
-        
         redacted = str(data)
         for label, pattern in patterns.items():
             redacted = re.sub(pattern, f"[{label.upper()} REDACTED]", redacted, flags=re.I)
-        
         return redacted
