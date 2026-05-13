@@ -15,7 +15,27 @@ class SushrutaIncidentResponse:
         self.incidents = []
         print("🔱 SUSHRUTA ONLINE — Surgical Response Ready")
 
-    def _state(self, score):
+    def __init__(self, ledger=None):
+        self.ledger = ledger
+        self.recent_detections = []
+        self.incidents = []  # Track last 10 detections for consensus
+        print("🔱 SUSHRUTA ONLINE — Surgical Response Ready")
+
+    def _state(self, score, source="unknown"):
+        # Multi-module consensus: TURIYA requires 2+ modules confirming high severity
+        self.recent_detections.append({"source": source, "score": score, "time": __import__('time').time()})
+        if len(self.recent_detections) > 10:
+            self.recent_detections.pop(0)
+        
+        # Count high-severity detections from different modules
+        high_severity_sources = set()
+        for d in self.recent_detections[-5:]:  # Last 5 detections
+            if d["score"] >= 0.85:
+                high_severity_sources.add(d["source"])
+        
+        # TURIYA requires 2+ modules confirming OR single module at 1.0
+        if score >= 1.0 or len(high_severity_sources) >= 2:
+            return "TURIYA"
         if score < 0.30: return "JAGRAT"
         if score < 0.60: return "SVAPNA"
         if score < 0.85: return "SUSHUPTI"
