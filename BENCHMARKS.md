@@ -69,3 +69,44 @@ The 4 Rasa patterns (Bhayanaka, Shringara, Vira, Adbhuta) cover only ~20 emotion
 
 ### Next Step
 Expand Rasa patterns with India-specific scam language collected from public sources.
+
+## XAI Framework: Explainable Detection Lineage
+
+Every KAVACH detection is traceable through three stages:
+
+### 1. Pratyaksha (Observation) — E
+The set of evidence tokens extracted from raw data:
+- Suspicious TLDs (`.tk`, `.ml`, `.xyz`)
+- Authority keywords ("SBI", "APDCL", "PM Kisan")
+- Urgency patterns ("blocked", "within 24 hours")
+- Hinglish transliterations ("band ho jayega")
+
+### 2. Anumana (Inference) — A
+The vector of individual module scores:
+```
+
+A = [score_nyaya, score_charaka, score_gandharva, score_dharma]
+
+```
+Each module independently scores the evidence. No module trusts another.
+
+### 3. Sabda (Consensus) — S
+The Sushruta consensus engine evaluates:
+```
+
+if score_gandharva = 1.0 → TURIYA (immediate)
+elif count(A_i ≥ 0.85) ≥ 2 → TURIYA (multi-module consensus)
+elif max(A) ≥ 0.60 → SUSHUPTI
+elif max(A) ≥ 0.30 → SVAPNA
+else → JAGRAT
+
+```
+
+### Traceability Guarantee
+Every TURIYA escalation has a documented lineage:
+- **Which evidence tokens triggered?** (Pratyaksha log)
+- **Which modules scored high?** (Anumana vector)
+- **Was it single-module certainty or multi-module consensus?** (Sabda decision)
+
+This ensures KAVACH is **deterministic, auditable, and defensible** — 
+unlike black-box ML systems that cannot explain their decisions.
