@@ -47,12 +47,6 @@ class AkashaLedger:
         """Alias for add_entry — for API compatibility."""
         return self.add_entry(module, event_type, data.get("severity", 5), str(data))
         prev = self.chain[-1]
-        b = {"block_id": len(self.chain),
-             "timestamp": datetime.utcnow().isoformat(),
-             "module_name": module, "event_type": event_type,
-             "severity": severity, "event_details": details,
-             "data_hash": self._hash(details),
-             "previous_hash": prev["current_hash"]}
         b["current_hash"] = self._hash(b)
         self.chain.append(b)
         self._save()
